@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.io</title>
+  </head>
+  <body>
+    <h1>News Feed</h1>
+    <div id="news-list"></div>
+    <script src="/static/socket.io/client-dist/socket.io.js"></script>
+
+    <script>
+      var socket = io("http://localhost:5000");
+
+      socket.on("news", function (data) {
+        var div = document.getElementById("news-list");
+        console.log("Rending news : ", data);
+        div.innerHTML = "";
+        for (var i = 0; i < data.length; i++) {
+          var newsItem = data[i];
+          div.innerHTML +=
+            "<h3>" +
+            newsItem.title +
+            " <small>" +
+            newsItem.date +
+            "</small></h3><br>";
+        }
+
+        socket.emit("any other events", { my: "data" });
+      });
+    </script>
+  </body>
+</html>
